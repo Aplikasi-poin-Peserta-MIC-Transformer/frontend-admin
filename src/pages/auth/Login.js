@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   Block,
   BlockContent,
-  BlockDes,
   BlockHead,
   BlockTitle,
   Button,
@@ -53,9 +52,6 @@ const Login = () => {
             <BlockHead>
               <BlockContent>
                 <BlockTitle tag="h4">Sign-In</BlockTitle>
-                <BlockDes>
-                  <p>Access Dashlite using your email and passcode.</p>
-                </BlockDes>
               </BlockContent>
             </BlockHead>
             {errorVal && (

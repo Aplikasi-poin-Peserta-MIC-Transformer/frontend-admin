@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { QrReader } from 'react-qr-reader';
 import Content from "../../layout/content/Content";
 import "./style.css"
 
 const ScanEvent = () => {
+  const inputRef = useRef(null);
   const [data, setData] = useState('');
+  const [value, setValue] = useState('');
   const [selected, setSelected] = useState("environment");
   const [processing, setProcessing] = useState(false);
   
@@ -13,6 +15,16 @@ const ScanEvent = () => {
     if (data !== '') {
       console.log('handleSubmit', data);
     }
+  }
+  
+  const handleChange = (e) => {
+    console.log('handleChange', e.target.value);
+    setData(e.target.value);
+    setValue(e.target.value);
+    setTimeout(() => {
+      setValue('');
+      inputRef.current.focus();
+    }, [500]);
   }
 
   return (
@@ -43,11 +55,12 @@ const ScanEvent = () => {
               Arahkan cursor disini, setelah itu scan :
             </label>
             <input
+              ref={inputRef}
               type="text"
               className="form-control"
               id="codeBarcode"
-              value={data}
-              onChange={(e) => setData(e.target.value)}
+              value={value}
+              onChange={handleChange}
               autoFocus
               autoComplete='off'
             />
@@ -65,6 +78,7 @@ const ScanEvent = () => {
               if (!!result) {
                 setData(result?.text);
                 setProcessing(false);
+                inputRef.current.focus();
                 console.log(`result`, result?.text);
               }
 
