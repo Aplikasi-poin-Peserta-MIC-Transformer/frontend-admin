@@ -72,7 +72,10 @@ const ScanEvent = () => {
         <p>Hasil: <b>{data}</b></p>
         {processing && (
           <QrReader
-            facingMode={selected}
+            // facingMode={selected}
+            constraints={{
+              facingMode: { selected }
+            }}
             delay={500}
             onResult={(result, error) => {
               if (!!result) {

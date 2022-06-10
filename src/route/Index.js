@@ -112,9 +112,14 @@ import { FileManagerContextProvider } from "../pages/app/file-manager/FileManage
 
 // gift routes
 import Dashboard from "../pages/dashboard/Dashboard";
-import Event from "../pages/event";
-import EventEdit from "../pages/event/edit";
-import EventCreate from "../pages/event/create";
+import EventKelompok from "../pages/event-kelompok";
+import EventKelompokScan from "../pages/event-kelompok/scan-event";
+import EventKelompokEdit from "../pages/event-kelompok/edit";
+import EventKelompokCreate from "../pages/event-kelompok/create";
+import EventUser from "../pages/event-user";
+import EventUserScanKelompok from "../pages/event-user/scan-event";
+import EventUserEdit from "../pages/event-user/edit";
+import EventUserCreate from "../pages/event-user/create";
 import UserEvent from "../pages/user-event";
 import UserEventEdit from "../pages/user-event/edit";
 import UserEventCreate from "../pages/user-event/create";
@@ -122,7 +127,7 @@ import Gift from "../pages/gift";
 import GiftEdit from "../pages/gift/edit";
 import GiftCreate from "../pages/gift/create";
 import ScanPoint from "../pages/scan-point";
-import ScanEvent from "../pages/scan-point/event";
+import ScanEventUser from "../pages/scan-point/event";
 
 const Pages = () => {
   useLayoutEffect(() => {
@@ -134,17 +139,27 @@ const Pages = () => {
       <Switch>
         {/* gift routes */}
         <Route exact path={`${process.env.PUBLIC_URL}/`} component={Dashboard} />
-        <Route exact path={`${process.env.PUBLIC_URL}/event`} component={Event} />
-        <Route exact path={`${process.env.PUBLIC_URL}/event/create`} component={EventCreate} />
-        <Route exact path={`${process.env.PUBLIC_URL}/event/edit/:id`} component={EventEdit} />
+
+        <Route exact path={`${process.env.PUBLIC_URL}/event-kelompok`} component={EventKelompok} />
+        <Route exact path={`${process.env.PUBLIC_URL}/event-kelompok/scan`} component={EventKelompokScan} />
+        <Route exact path={`${process.env.PUBLIC_URL}/event-kelompok/edit`} component={EventKelompokEdit} />
+        <Route exact path={`${process.env.PUBLIC_URL}/event-kelompok/create`} component={EventKelompokCreate} />
+
+        <Route exact path={`${process.env.PUBLIC_URL}/event-user`} component={EventUser} />
+        <Route exact path={`${process.env.PUBLIC_URL}/event-user/scan-event/:id`} component={EventUserScanKelompok} />
+        <Route exact path={`${process.env.PUBLIC_URL}/event-user/create`} component={EventUserCreate} />
+        <Route exact path={`${process.env.PUBLIC_URL}/event-user/edit/:id`} component={EventUserEdit} />
+
         <Route exact path={`${process.env.PUBLIC_URL}/user-event`} component={UserEvent} />
         <Route exact path={`${process.env.PUBLIC_URL}/user-event/create`} component={UserEventCreate} />
         <Route exact path={`${process.env.PUBLIC_URL}/user-event/edit/:id`} component={UserEventEdit} />
+
         <Route exact path={`${process.env.PUBLIC_URL}/gift`} component={Gift} />
         <Route exact path={`${process.env.PUBLIC_URL}/gift/create`} component={GiftCreate} />
         <Route exact path={`${process.env.PUBLIC_URL}/gift/edit/:id`} component={GiftEdit} />
+
         <Route exact path={`${process.env.PUBLIC_URL}/scan-point`} component={ScanPoint} />
-        <Route exact path={`${process.env.PUBLIC_URL}/scan-point/:name/:id`} component={ScanEvent} />
+        <Route exact path={`${process.env.PUBLIC_URL}/scan-point/:name/:id`} component={ScanEventUser} />
 
 
         {/*Panel */}

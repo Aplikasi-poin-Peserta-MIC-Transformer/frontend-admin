@@ -37,34 +37,17 @@ const Event = () => {
       sortable: true,
     },
     {
-      name: "Perusahaan",
-      selector: (row) => row.perusahaan,
-      sortable: true,
-    },
-    {
-      name: "Tanggal mulai",
-      selector: (row) => row.tanggal,
-      sortable: true,
-    },
-    {
-      name: "Bobot Point",
-      selector: (row) => row.bobot_point,
-      sortable: true,
-      maxWidth: "150px",
-    },
-    {
       name: "Actions",
       cell: (row) => {
         return (
           <>
+            <button type='button' className='btn btn-primary p-1 mr-1' onClick={() => history.push(`/event/scan-event/${row.id}`)}><Icon name="eye-fill"/></button>
             <button type='button' className='btn btn-primary p-1 mr-1' onClick={() => history.push(`/event/edit/${row.id}`)}><Icon name="pen-alt-fill"/></button>
             <button type='button' className='btn btn-danger p-1'><Icon name="trash-fill"/></button>
           </>
         )
       },
-      ignoreRowClick: true,
-      allowOverflow: true,
-      button: true,
+      maxWidth: "150px",
       sortable: false,
       style: {
         justifyContent: "center",

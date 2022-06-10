@@ -5,10 +5,19 @@ import { useHistory } from 'react-router-dom';
 import {
   ReactDataTable,
 } from "../../components/Component";
+import {
+  Modal,
+  ModalHeader,
+  ModalBody,
+} from "reactstrap";
+import QRCode from "react-qr-code";
 
 const UserEvent = () => {
   const history = useHistory();
   const [eventData, setData] = useState([]);
+  const [dataModal, setDataModal] = useState({});
+  const [modal, setModal] = useState(false);
+  const toggle = () => setModal(!modal);
 
   useEffect(() => {
     const newData = Array.from(Array(15).keys()).map((idx) => {
@@ -62,31 +71,77 @@ const UserEvent = () => {
       cell: (row) => {
         return (
           <>
+            <button type='button' className='btn btn-primary p-1 mr-1'
+              onClick={() => {
+                setDataModal(row);
+                toggle();
+              }}
+            ><Icon name="eye-fill" /></button>
             <button type='button' className='btn btn-primary p-1 mr-1' onClick={() => history.push(`/user-event/edit/${row.id}`)}><Icon name="pen-alt-fill" /></button>
             <button type='button' className='btn btn-danger p-1'><Icon name="trash-fill" /></button>
           </>
         )
       },
-      ignoreRowClick: true,
-      allowOverflow: true,
-      button: true,
+      maxWidth: "150px",
       sortable: false,
       style: {
         justifyContent: "center",
       }
     },
   ];
+
+  // download QR code
+  const downloadQRCode = () => {
+    // download svg qr code to png
+    const svg = document.getElementById("qr-code").innerHTML;
+    const svg64 = btoa(svg);
+    const img64 = "data:image/svg+xml;base64," + svg64;
+    const img = new Image();
+    img.src = img64;
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0);
+      const canvasData = canvas.toDataURL("image/png");
+      const a = document.createElement("a");
+      a.href = canvasData;
+      a.download = `${dataModal.nama}.png`;
+      a.click();
+    }
+  }
   return (
     <Content>
       <div className="d-flex justify-content-end mb-2">
-        <button type="button" className="btn btn-primary mr-2" onClick={() => history.push('/user-event/create')}>
-          <Icon name="plus-circle-fill" className="mr-1" />{` Tambah Event`}
-        </button>
         <button type="button" className="btn btn-primary">
           <Icon name="reload-alt" />
         </button>
       </div>
       <ReactDataTable data={eventData} columns={dataTableColumns} keyFilter='nama' pagination />
+
+      <Modal isOpen={modal} toggle={toggle}>
+        <ModalHeader
+          toggle={toggle}
+          close={
+            <button className="close" onClick={toggle}>
+              <Icon name="cross" />
+            </button>
+          }
+        >
+          {dataModal.nama}
+        </ModalHeader>
+        <ModalBody>
+          <div id="qr-code" className="d-flex justify-content-center">
+            <QRCode value={dataModal.nama} />
+          </div>
+          <div className="d-flex justify-content-center mt-3">
+            <button type="button" className="btn btn-primary ml-2" onClick={downloadQRCode}>
+              Download{` `}<Icon className='ml-2' name="download" />
+            </button>
+          </div>
+        </ModalBody>
+      </Modal>
     </Content>
   )
 }
