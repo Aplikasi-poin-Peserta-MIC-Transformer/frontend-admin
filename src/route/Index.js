@@ -112,22 +112,32 @@ import { FileManagerContextProvider } from "../pages/app/file-manager/FileManage
 
 // gift routes
 import Dashboard from "../pages/dashboard/Dashboard";
-import EventKelompok from "../pages/event-kelompok";
-import EventKelompokScan from "../pages/event-kelompok/scan-event";
-import EventKelompokEdit from "../pages/event-kelompok/edit";
-import EventKelompokCreate from "../pages/event-kelompok/create";
-import EventUser from "../pages/event-user";
-import EventUserScanKelompok from "../pages/event-user/scan-event";
-import EventUserEdit from "../pages/event-user/edit";
-import EventUserCreate from "../pages/event-user/create";
-import UserEvent from "../pages/user-event";
-import UserEventEdit from "../pages/user-event/edit";
-import UserEventCreate from "../pages/user-event/create";
-import Gift from "../pages/gift";
-import GiftEdit from "../pages/gift/edit";
-import GiftCreate from "../pages/gift/create";
-import ScanPoint from "../pages/scan-point";
-import ScanEventUser from "../pages/scan-point/event";
+
+import EventKelompok from "../pages/mic-transformer/event-kelompok";
+import EventKelompokScan from "../pages/mic-transformer/event-kelompok/scan-event";
+import EventKelompokEdit from "../pages/mic-transformer/event-kelompok/edit";
+import EventKelompokCreate from "../pages/mic-transformer/event-kelompok/create";
+
+import EventUser from "../pages/mic-transformer/event-user";
+import EventUserEdit from "../pages/mic-transformer/event-user/edit";
+import EventUserCreate from "../pages/mic-transformer/event-user/create";
+
+import UserEvent from "../pages/mic-transformer/user-event";
+import UserEventEdit from "../pages/mic-transformer/user-event/edit";
+import UserEventCreate from "../pages/mic-transformer/user-event/create";
+
+import Gift from "../pages/mic-transformer/gift";
+import GiftEdit from "../pages/mic-transformer/gift/edit";
+import GiftCreate from "../pages/mic-transformer/gift/create";
+
+import ScanPoint from "../pages/mic-transformer/scan-point";
+import ScanEventUser from "../pages/mic-transformer/scan-point/event";
+
+import Kelompok from "../pages/mic-transformer/kelompok";
+import KelompokUser from "../pages/mic-transformer/kelompok/user-kelompok";
+import CreateAnggota from "../pages/mic-transformer/kelompok/create-anggota";
+
+import BarcodeKelompok from "../pages/mic-transformer/barcode/barcode-kelompok";
 
 const Pages = () => {
   useLayoutEffect(() => {
@@ -145,8 +155,13 @@ const Pages = () => {
         <Route exact path={`${process.env.PUBLIC_URL}/event-kelompok/edit/:id`} component={EventKelompokEdit} />
         <Route exact path={`${process.env.PUBLIC_URL}/event-kelompok/create`} component={EventKelompokCreate} />
 
+        <Route exact path={`${process.env.PUBLIC_URL}/kelompok`} component={Kelompok} />
+        <Route exact path={`${process.env.PUBLIC_URL}/kelompok/user/:id`} component={KelompokUser} />
+        <Route exact path={`${process.env.PUBLIC_URL}/create-anggota`} component={CreateAnggota} />
+
+        <Route exact path={`${process.env.PUBLIC_URL}/barcode-kelompok`} component={BarcodeKelompok} />
+
         <Route exact path={`${process.env.PUBLIC_URL}/event-user`} component={EventUser} />
-        <Route exact path={`${process.env.PUBLIC_URL}/event-user/scan-event/:id`} component={EventUserScanKelompok} />
         <Route exact path={`${process.env.PUBLIC_URL}/event-user/create`} component={EventUserCreate} />
         <Route exact path={`${process.env.PUBLIC_URL}/event-user/edit/:id`} component={EventUserEdit} />
 

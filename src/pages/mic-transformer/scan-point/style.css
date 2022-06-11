@@ -1,0 +1,9 @@
+.scanner {
+  max-width: 50%;
+}
+
+@media (max-width: 768px) {
+  .scanner {
+    max-width: 100%;
+  }
+}

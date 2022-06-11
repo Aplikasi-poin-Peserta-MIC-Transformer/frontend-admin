@@ -21,10 +21,15 @@ const Login = () => {
 
   const onFormSubmit = (formData) => {
     setLoading(true);
-    const loginName = "username";
+    // const loginName = "username";
     const pass = "123456";
-    if (formData.name === loginName && formData.passcode === pass) {
+    if (formData.passcode === pass) {
       localStorage.setItem("accessToken", "token");
+      if (formData.name === "kelompok") {
+        localStorage.setItem("role", "user");
+      } else if (formData.name === "admin") {
+        localStorage.setItem("role", "admin");
+      }
       setTimeout(() => {
         window.history.pushState(
           `${process.env.PUBLIC_URL ? process.env.PUBLIC_URL : "/"}`,
@@ -52,6 +57,7 @@ const Login = () => {
             <BlockHead>
               <BlockContent>
                 <BlockTitle tag="h4">Sign-In</BlockTitle>
+                <p>Login dengan <b>admin</b> atau <b>kelompok</b></p>
               </BlockContent>
             </BlockHead>
             {errorVal && (
@@ -75,7 +81,7 @@ const Login = () => {
                     id="default-01"
                     name="name"
                     ref={register({ required: "This field is required" })}
-                    defaultValue="username"
+                    defaultValue="admin"
                     placeholder="Enter your username"
                     className="form-control-lg form-control"
                   />

@@ -259,14 +259,16 @@ const MenuSub = ({ icon, link, text, sub, sidebarToggle, mobileView, ...props })
 };
 
 const Menu = ({ sidebarToggle, mobileView }) => {
-  const [data, setMenuData] = useState(menu);
+  const role = localStorage.getItem("role");
+  const menuItem = menu.filter((item) => item.role === role);
+  const [data, setMenuData] = useState(menuItem);
 
   useEffect(() => {
     data.forEach((item, index) => {
       if (item.panel) {
         let found = item.subPanel.find((sPanel) => process.env.PUBLIC_URL + sPanel.link === window.location.pathname);
         if (found) {
-          setMenuData([menu[index]]);
+          setMenuData([menuItem[index]]);
         }
       }
     });
