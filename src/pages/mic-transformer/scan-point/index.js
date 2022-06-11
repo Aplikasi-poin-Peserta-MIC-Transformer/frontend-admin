@@ -136,7 +136,7 @@ const ScanEvent = () => {
 
         {scanValid && !processing && (
           <div style={{ width: "100%", margin: "0 auto" }}>
-            <img src={scanAnimated} alt="scan animated" style={{ width: "50%" }} />
+            <img src={scanAnimated} alt="scan animated" className="scanner" />
           </div>
         )}
       </div>
