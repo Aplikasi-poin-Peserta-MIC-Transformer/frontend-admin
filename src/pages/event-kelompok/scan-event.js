@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Content from "../../layout/content/Content";
-import { QrReader } from 'react-qr-reader';
+import QrReader from "react-qr-reader";
 import {
   Block,
   BlockHead,
@@ -44,6 +44,21 @@ const ScanEvent = () => {
     setData(e.target.value);
     setValue(e.target.value);
   }
+
+  const handleScan = async (scanData) => {
+    if (scanData) {
+      console.log(`loaded data data`, scanData);
+      setData(scanData);
+      setProcessing(false);
+      playSound()
+    } else {
+      console.log(`not loaded data data`);
+    }
+  };
+  const handleError = (err) => {
+    console.error(err);
+  };
+
   return (
     <Content page="component">
       <Block size="lg">
@@ -62,7 +77,7 @@ const ScanEvent = () => {
               <>
                 <li
                   className="list-group-item text-center"
-                  key={idx+1}
+                  key={idx + 1}
                   style={{ cursor: "pointer", marginBottom: "10px" }}
                   onClick={() => {
                     toggle();
@@ -97,46 +112,31 @@ const ScanEvent = () => {
         <ModalBody>
           <h3 className='text-center'>Bobot Poin {dataModal.bobot_point}</h3>
 
-        <div className="form-inline d-flex justify-content-center mt-3">
-          {processing && (
-            <div className="form-group mb-2 mr-2">
-              <select
-                className="form-control form-select pr-3"
-                id="fv-topics"
-                name="topics"
-                onChange={(e) => setSelected(e.target.value)}
-              >
-                <option value={"environment"}>Kamera Belakang</option>
-                <option value={"user"}>Kamera Depan</option>
-              </select>
-            </div>
-          )}
-          <button type="button" className="btn btn-primary mb-2" onClick={() => setProcessing(!processing)}>{!processing ? `Buka Kamera` : `Tutup Kamera`}</button>
+          <div className="form-inline d-flex justify-content-center mt-3">
+            {processing && (
+              <div className="form-group mb-2 mr-2">
+                <select
+                  className="form-control form-select pr-3"
+                  id="fv-topics"
+                  name="topics"
+                  onChange={(e) => setSelected(e.target.value)}
+                >
+                  <option value={"environment"}>Kamera Belakang</option>
+                  <option value={"user"}>Kamera Depan</option>
+                </select>
+              </div>
+            )}
+            <button type="button" className="btn btn-primary mb-2" onClick={() => setProcessing(!processing)}>{!processing ? `Buka Kamera` : `Tutup Kamera`}</button>
           </div>
-          
+
           {processing && (
             <QrReader
-              // facingMode={selected}
-              constraints={{
-                facingMode: selected
-              }}
+              className="videoSize"
+              facingMode={selected}
               delay={500}
-              onResult={(result, error) => {
-                if (!!result) {
-                  setData(result?.text);
-                  setProcessing(false);
-                  playSound()
-                  console.log(`result`, result?.text);
-                }
-
-                if (!!error) {
-                  console.log(`error`, error);
-                }
-              }}
-              // chooseDeviceId={()=>selected}
-              // className="scanner"
-              videoStyle={{ width: "100%", height: "75%", borderRadius: "15px" }}
-              videoContainerStyle={{ marginBottom: "-100px" }}
+              onError={handleError}
+              onScan={handleScan}
+            // style={{ width: "80%", maxHeight: "80vh" }}
             />
           )}
 
