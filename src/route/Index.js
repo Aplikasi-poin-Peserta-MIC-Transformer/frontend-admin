@@ -141,8 +141,8 @@ const Pages = () => {
         <Route exact path={`${process.env.PUBLIC_URL}/`} component={Dashboard} />
 
         <Route exact path={`${process.env.PUBLIC_URL}/event-kelompok`} component={EventKelompok} />
-        <Route exact path={`${process.env.PUBLIC_URL}/event-kelompok/scan`} component={EventKelompokScan} />
-        <Route exact path={`${process.env.PUBLIC_URL}/event-kelompok/edit`} component={EventKelompokEdit} />
+        <Route exact path={`${process.env.PUBLIC_URL}/event-kelompok/scan/:id`} component={EventKelompokScan} />
+        <Route exact path={`${process.env.PUBLIC_URL}/event-kelompok/edit/:id`} component={EventKelompokEdit} />
         <Route exact path={`${process.env.PUBLIC_URL}/event-kelompok/create`} component={EventKelompokCreate} />
 
         <Route exact path={`${process.env.PUBLIC_URL}/event-user`} component={EventUser} />
