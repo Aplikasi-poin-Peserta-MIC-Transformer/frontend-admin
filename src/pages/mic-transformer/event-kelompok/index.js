@@ -78,7 +78,7 @@ const Event = () => {
   return (
     <Content>
       <div className="d-flex justify-content-end mb-2">
-        <button type="button" className="btn btn-primary mr-2" onClick={() => history.push('/event/create')}>
+        <button type="button" className="btn btn-primary mr-2" onClick={() => history.push('/event-kelompok/create')}>
           <Icon name="plus-circle-fill" className="mr-1" />{` Tambah Event`}
         </button>
         <button type="button" className="btn btn-primary">

@@ -6,6 +6,7 @@ import {
   BlockHeadContent,
   BlockTitle,
 } from "../../../components/Component";
+import QRCode from "react-qr-code";
 
 const BarcodeKelompok = () => {
   return (
@@ -13,11 +14,12 @@ const BarcodeKelompok = () => {
       <Block size="lg">
         <BlockHead>
           <BlockHeadContent>
-            <BlockTitle tag="h1">Nama Event camera v2</BlockTitle>
-            <p>
-              Cards are built with as little markup and styles as possible, but still manage to deliver a ton of
-              control and customization.
-            </p>
+            <BlockTitle tag="h1" className='text-center mb-4'>Nama Event camera v2</BlockTitle>
+            <div id="qr-code" className="d-flex justify-content-center">
+              <QRCode value={`Nama-kelompok`} />
+            </div>
+
+            <BlockTitle tag="h2" className='text-center mt-4'>Poin: {80} </BlockTitle>
           </BlockHeadContent>
         </BlockHead>
       </Block>

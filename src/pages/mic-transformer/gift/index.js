@@ -60,7 +60,7 @@ const Gift = () => {
       cell: (row) => {
         return (
           <>
-            <button type='button' className='btn btn-primary p-1 mr-1' onClick={() => history.push(`/event/edit/${row.id}`)}><Icon name="pen-alt-fill" /></button>
+            <button type='button' className='btn btn-primary p-1 mr-1' onClick={() => history.push(`/gift/edit/${row.id}`)}><Icon name="pen-alt-fill" /></button>
             <button type='button' className='btn btn-danger p-1'><Icon name="trash-fill" /></button>
           </>
         )
@@ -77,7 +77,7 @@ const Gift = () => {
   return (
     <Content>
       <div className="d-flex justify-content-end mb-2">
-        <button type="button" className="btn btn-primary mr-2" onClick={() => history.push('/event/create')}>
+        <button type="button" className="btn btn-primary mr-2" onClick={() => history.push('/gift/create')}>
           <Icon name="plus-circle-fill" className="mr-1" />{` Tambah Event`}
         </button>
         <button type="button" className="btn btn-primary">

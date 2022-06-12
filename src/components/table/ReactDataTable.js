@@ -148,8 +148,8 @@ const ReactDataTable = ({ data, columns, keyFilter = 'name', pagination, actions
             <div className="d-flex justify-content-end g-2">
               {actions && <Export data={data} />}
               <div className="dataTables_length" id="DataTables_Table_0_length">
-                <label>
-                  <span className="d-none d-sm-inline-block">Show</span>
+                <label className="d-flex justify-content-end">
+                  <span className="d-none d-sm-inline-block mr-2">Show</span>
                   <div className="form-control-select">
                     {" "}
                     <select

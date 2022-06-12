@@ -2,14 +2,21 @@
 import React, { useState, useEffect } from 'react'
 import Content from "../../../layout/content/Content";
 import { Icon } from "../../../components/Component";
-import { useHistory } from 'react-router-dom';
 import {
   ReactDataTable,
 } from "../../../components/Component";
+import CreateEventUser from './create';
+import {
+  Modal,
+  ModalHeader,
+  ModalBody,
+} from "reactstrap";
 
 const Event = () => {
-  const history = useHistory();
   const [eventData, setData] = useState([]);
+  const [formUpdate, setFormUpdate] = useState({});
+  const [modal, setModal] = useState(false);
+  const toggle = () => setModal(!modal);
 
   useEffect(() => {
     const newData = Array.from(Array(15).keys()).map((idx) => {
@@ -17,7 +24,8 @@ const Event = () => {
         id: idx,
         event: `Event ${idx}`,
         perusahaan: `Perusahaan ${idx}`,
-        tanggal: `Tanggal ${idx}`,
+        tanggal_mulai: `2022-06-12`,
+        tanggal_selesai: `2022-06-19`,
         bobot_point: 100,
       }
     });
@@ -43,7 +51,7 @@ const Event = () => {
     },
     {
       name: "Tanggal mulai",
-      selector: (row) => row.tanggal,
+      selector: (row) => row.tanggal_mulai,
       sortable: true,
     },
     {
@@ -57,7 +65,16 @@ const Event = () => {
       cell: (row) => {
         return (
           <>
-            <button type='button' className='btn btn-primary p-1 mr-1' onClick={() => history.push(`/event/edit/${row.id}`)}><Icon name="pen-alt-fill"/></button>
+            <button type='button' className='btn btn-primary p-1 mr-1' onClick={() => {
+              setFormUpdate({
+                nama_event: row.event,
+                nama_perusahaan: row.perusahaan,
+                tanggal_mulai: row.tanggal_mulai,
+                tanggal_selesai: row.tanggal_selesai,
+                bobot_point: row.bobot_point,
+              })
+              toggle();
+            }}><Icon name="pen-alt-fill"/></button>
             <button type='button' className='btn btn-danger p-1'><Icon name="trash-fill"/></button>
           </>
         )
@@ -69,17 +86,38 @@ const Event = () => {
       }
     },
   ];
+
+  const [createForm, setCreateForm] = useState(false);
   return (
     <Content>
       <div className="d-flex justify-content-end mb-2">
-        <button type="button" className="btn btn-primary mr-2" onClick={() => history.push('/event/create')}>
+        <button type="button" className="btn btn-primary mr-2" onClick={() => setCreateForm(!createForm)}>
           <Icon name="plus-circle-fill" className="mr-1" />{` Tambah Event`}
         </button>
         <button type="button" className="btn btn-primary">
           <Icon name="reload-alt"/>
         </button>
       </div>
+
+      {createForm  && <CreateEventUser />}
+
       <ReactDataTable data={eventData} columns={dataTableColumns} keyFilter='event' pagination />
+
+      <Modal isOpen={modal} toggle={toggle}>
+        <ModalHeader
+          toggle={toggle}
+          close={
+            <button className="close" onClick={toggle}>
+              <Icon name="cross" />
+            </button>
+          }
+        >
+          Update event
+        </ModalHeader>
+        <ModalBody>
+          {modal && <CreateEventUser form={formUpdate} isUpdate />}
+        </ModalBody>
+      </Modal>
     </Content>
   )
 }

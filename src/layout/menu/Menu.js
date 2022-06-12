@@ -260,7 +260,19 @@ const MenuSub = ({ icon, link, text, sub, sidebarToggle, mobileView, ...props })
 
 const Menu = ({ sidebarToggle, mobileView }) => {
   const role = localStorage.getItem("role");
-  const menuItem = menu.filter((item) => item.role === role);
+  const navigation = menu.filter(item => {
+    const res = item.role
+    if (res) {
+      for (let i = 0; i < res.length; i++) {
+        if (role.includes(res[i])) {
+          return true
+        }
+      }
+      return false
+    } else return true
+  })
+
+  const menuItem = navigation.filter(item => item.role !== undefined);
   const [data, setMenuData] = useState(menuItem);
 
   useEffect(() => {

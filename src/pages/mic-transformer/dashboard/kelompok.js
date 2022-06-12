@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import Content from "../../../layout/content/Content";
 import { Icon } from "../../../components/Component";
-import { useHistory } from 'react-router-dom';
 import {
   ReactDataTable,
+  Button,
 } from "../../../components/Component";
 import {
   Modal,
@@ -11,9 +11,10 @@ import {
   ModalBody,
 } from "reactstrap";
 import QRCode from "react-qr-code";
+import Select from 'react-select';
+import { FormGroup, Label, Form } from "reactstrap";
 
 const UserEventKelompok = () => {
-  const history = useHistory();
   const [eventData, setData] = useState([]);
   const [dataModal, setDataModal] = useState({});
   const [modal, setModal] = useState(false);
@@ -64,8 +65,6 @@ const UserEventKelompok = () => {
                 toggle();
               }}
             ><Icon name="eye-fill" /></button>
-            <button type='button' className='btn btn-primary p-1 mr-1' onClick={() => history.push(`/user-event/edit/${row.id}`)}><Icon name="pen-alt-fill" /></button>
-            <button type='button' className='btn btn-danger p-1'><Icon name="trash-fill" /></button>
           </>
         )
       },
@@ -98,12 +97,20 @@ const UserEventKelompok = () => {
       a.click();
     }
   }
+
+  const [showForm, setShowForm] = useState(false);
+  const options = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' }
+  ]
+
   return (
     <Content>
       <div className="d-flex justify-content-between mb-2">
         <h4 className="mr-2">Nama Kelompok</h4>
         <div className="d-flex justify-content-end mb-2">
-          <button type="button" className="btn btn-primary mr-2" onClick={() => history.push('/create-anggota')}>
+          <button type="button" className="btn btn-primary mr-2" onClick={() => setShowForm(!showForm)}>
             <Icon name="plus-circle-fill" className="mr-1" />{` Tambah Anggota`}
           </button>
           <button type="button" className="btn btn-primary">
@@ -111,7 +118,33 @@ const UserEventKelompok = () => {
           </button>
         </div>
       </div>
-      <ReactDataTable data={eventData} columns={dataTableColumns} keyFilter='nama' pagination />
+
+      {showForm && (
+        <Form className='mb-4'>
+          <FormGroup>
+            <Label className="form-label" htmlFor="pilihEvent">
+              Pilih Anggota
+            </Label>
+            <div className="form-control-wrap">
+              <Select
+                // defaultValue={[colourOptions[2], colourOptions[3]]}
+                isMulti
+                name="colors"
+                options={options}
+                className="basic-multi-select"
+                classNamePrefix="select"
+              />
+            </div>
+          </FormGroup>
+          <FormGroup className='d-flex justify-content-end'>
+            <Button color="primary" size="lg">
+              Simpan
+            </Button>
+          </FormGroup>
+        </Form>
+      )}
+
+      {eventData.length > 0 && <ReactDataTable data={eventData} columns={dataTableColumns} keyFilter='nama' pagination />}
 
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader

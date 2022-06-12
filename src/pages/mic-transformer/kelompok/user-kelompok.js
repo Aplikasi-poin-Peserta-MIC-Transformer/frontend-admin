@@ -98,6 +98,7 @@ const UserEventKelompok = () => {
       a.click();
     }
   }
+
   return (
     <Content>
       <div className="d-flex justify-content-between mb-2">
@@ -106,7 +107,7 @@ const UserEventKelompok = () => {
           <Icon name="reload-alt" />
         </button>
       </div>
-      <ReactDataTable data={eventData} columns={dataTableColumns} keyFilter='nama' pagination />
+      {eventData.length > 0 && <ReactDataTable data={eventData} columns={dataTableColumns} keyFilter='nama' pagination />}
 
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader

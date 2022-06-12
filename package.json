@@ -34,7 +34,7 @@
     "react-router": "^5.2.1",
     "react-router-dom": "^5.3.0",
     "react-scripts": "^5.0.0",
-    "react-select": "^4.3.1",
+    "react-select": "^5.3.2",
     "react-slick": "^0.28.1",
     "react-step-builder": "^2.0.11",
     "react-syntax-highlighter": "^15.4.4",
