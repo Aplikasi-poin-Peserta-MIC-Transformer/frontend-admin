@@ -14,7 +14,7 @@ const BarcodeKelompok = () => {
       <Block size="lg">
         <BlockHead>
           <BlockHeadContent>
-            <BlockTitle tag="h1" className='text-center mb-4'>Nama Event camera v2</BlockTitle>
+            <BlockTitle tag="h1" className='text-center mb-4'>Nama Kelompok</BlockTitle>
             <div id="qr-code" className="d-flex justify-content-center">
               <QRCode value={`Nama-kelompok`} />
             </div>
