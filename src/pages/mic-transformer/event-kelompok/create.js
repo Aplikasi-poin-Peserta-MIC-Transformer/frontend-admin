@@ -57,7 +57,7 @@ const create = () => {
           <Col md="6">
             <FormGroup>
               <Label className="form-label" htmlFor="pilihEvent">
-                Pilih Event
+                Tambah Pos
               </Label>
               {Array.from(Array(15).keys()).map((idx) => (
                 <React.Fragment key={idx}>
