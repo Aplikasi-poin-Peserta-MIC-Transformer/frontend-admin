@@ -8,7 +8,12 @@ import classNames from "classnames";
 
 const create = () => {
   const { errors, register, handleSubmit } = useForm();
-  const [defaultFiles, setDefaultFiles] = useState("");
+
+  const [file, setFile] = useState([]);
+  function handleChange(e) {
+    console.log(e.target.files);
+    setFile(URL.createObjectURL(e.target.files[0]));
+  }
 
   const onFormSubmit = (e) => {
     console.log(e);
@@ -45,12 +50,13 @@ const create = () => {
                     type="file"
                     className="custom-file-input"
                     id="customFile"
-                    onChange={(e) => setDefaultFiles(e.target.files[0].name)}
+                    onChange={handleChange}
                   />
                   <label className="custom-file-label" htmlFor="customFile">
-                    {defaultFiles === "" ? "Choose files" : defaultFiles}
+                    {file.length > 0 ? file[0]?.name : "Choose files" }
                   </label>
                 </div>
+                {file.length > 0 && <img src={file} alt="preview" className="img-preview" />}
               </div>
             </FormGroup>
           </Col>

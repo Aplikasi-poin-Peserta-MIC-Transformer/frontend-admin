@@ -11,27 +11,34 @@ import {
   ModalHeader,
   ModalBody,
 } from "reactstrap";
+import API from '../../../api';
 
 const Event = () => {
   const history = useHistory();
   const [eventData, setData] = useState([]);
   const [imgPos, setImgPos] = useState('');
   const [modal, setModal] = useState(false);
+  const [loading, setLoading] = useState(true);
   const toggle = () => setModal(!modal)
 
   useEffect(() => {
-    const newData = Array.from(Array(15).keys()).map((idx) => {
-      return{
-        id: idx,
-        event: `Event ${idx}`,
-        perusahaan: `Perusahaan ${idx}`,
-        tanggal: `Tanggal ${idx}`,
-        bobot_point: 100,
-        gambar: `https://via.placeholder.com/300`,
-      }
-    });
-    setData(newData);
+    API.getEvents().then(res => {
+      setData(res);
+      setLoading(false);
+    }).catch(err => {
+      console.log(err);
+    })
   }, []);
+
+  const reloadData = () => {
+    setLoading(true);
+    API.getEvents().then(res => {
+      setData(res);
+      setLoading(false);
+    }).catch(err => {
+      console.log(err);
+    })
+  }
 
   const dataTableColumns = [
     {
@@ -41,8 +48,13 @@ const Event = () => {
       maxWidth: "100px",
     },
     {
-      name: "Event",
-      selector: (row) => row.event,
+      name: "Nama Event",
+      selector: (row) => row.nama_event,
+      sortable: true,
+    },
+    {
+      name: "Jumlah Pos",
+      selector: (row) => row.jml_pos,
       sortable: true,
     },
     {
@@ -53,6 +65,17 @@ const Event = () => {
       }}><Icon name="img-fill"/></button>,
       sortable: false,
       maxWidth: "150px",
+      style: {
+        justifyContent: "center",
+      }
+    },
+    {
+      name: "Kelasemen",
+      cell: (row) => <button type='button' className='btn btn-primary' onClick={() => {
+        history.push(`/event-kelompok/kelasemen/${row.id}`)
+      }}><Icon name="growth-fill" className="mr-1" />Kelasemen</button>,
+      sortable: false,
+      maxWidth: "200px",
       style: {
         justifyContent: "center",
       }
@@ -81,11 +104,11 @@ const Event = () => {
         <button type="button" className="btn btn-primary mr-2" onClick={() => history.push('/event-kelompok/create')}>
           <Icon name="plus-circle-fill" className="mr-1" />{` Tambah Event`}
         </button>
-        <button type="button" className="btn btn-primary">
+        <button type="button" className="btn btn-primary" onClick={() => reloadData()}>
           <Icon name="reload-alt"/>
         </button>
       </div>
-      <ReactDataTable data={eventData} columns={dataTableColumns} keyFilter='event' pagination />
+      <ReactDataTable data={eventData} columns={dataTableColumns} keyFilter='event' loading={loading} pagination />
 
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader
@@ -100,7 +123,7 @@ const Event = () => {
         </ModalHeader>
         <ModalBody>
           <div className='d-flex justify-content-center'>
-            <img src={imgPos} alt="gambar pos" className="img-fluid" />
+            <img src={imgPos || `https://via.placeholder.com/300`} alt="gambar pos" className="img-fluid" />
           </div>
         </ModalBody>
       </Modal>

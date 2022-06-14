@@ -20,7 +20,19 @@ import ForgotPassword from "./pages/auth/ForgotPassword";
 import Success from "./pages/auth/Success";
 import InvoicePrint from "./pages/pre-built/invoice/InvoicePrint";
 
+import axios from "axios";
+import { useAuthContext } from "./context/authContext";
+
 const App = (props) => {
+  const { token } = useAuthContext();
+  React.useEffect(() => {
+    axios.defaults.baseURL = "http://103.161.184.8/api/v1";
+    axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+    axios.interceptors.request.use(config => {
+      config.headers.common['access_token'] = token;
+      return config;
+    });
+  }, [token]);
   return (
     <Switch>
       {/* Auth Pages */}

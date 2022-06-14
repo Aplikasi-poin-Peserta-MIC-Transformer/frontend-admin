@@ -93,7 +93,7 @@ const CustomCheckbox = React.forwardRef(({ onClick, ...rest }, ref) => (
   </div>
 ));
 
-const ReactDataTable = ({ data, columns, keyFilter = 'name', pagination, actions, className, selectableRows, expandableRows, ...props }) => {
+const ReactDataTable = ({ data, columns, keyFilter = 'name', pagination, loading, actions, className, selectableRows, expandableRows, ...props }) => {
   const [tableData, setTableData] = useState(data);
   const [searchText, setSearchText] = useState("");
   const [rowsPerPageS, setRowsPerPage] = useState(10);
@@ -175,6 +175,7 @@ const ReactDataTable = ({ data, columns, keyFilter = 'name', pagination, actions
         columns={columns}
         className={className}
         selectableRows={selectableRows}
+        progressPending={loading}
         selectableRowsComponent={CustomCheckbox}
         expandableRowsComponent={ExpandableRowComponent}
         expandableRows={mobileView}

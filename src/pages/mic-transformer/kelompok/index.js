@@ -9,6 +9,7 @@ import {
 } from "../../../components/Component";
 import { useForm } from "react-hook-form";
 import { Row, Col, Form, FormGroup, Spinner, Label } from "reactstrap";
+import Select from 'react-select';
 
 const Kelompok = () => {
   const history = useHistory();
@@ -20,6 +21,7 @@ const Kelompok = () => {
         id: idx,
         nama_kelompok: `Kelompok ${idx}`,
         username: `username_${idx}`,
+        nama_event: `Event ${idx}`,
       }
     });
     setData(newData);
@@ -40,6 +42,11 @@ const Kelompok = () => {
     {
       name: "Username",
       selector: (row) => row.username,
+      sortable: true,
+    },
+    {
+      name: "Nama Event",
+      selector: (row) => row.nama_event,
       sortable: true,
     },
     {
@@ -66,6 +73,12 @@ const Kelompok = () => {
   const [loading, setLoading] = useState(false);
   const [passState, setPassState] = useState(false);
 
+  const options = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' }
+  ]
+
   const onFormSubmit = (data) => {
     console.log(data);
     setLoading(true);
@@ -91,7 +104,26 @@ const Kelompok = () => {
       {showForm && (
         <Form className="is-alter mb-4" onSubmit={handleSubmit(onFormSubmit)}>
           <Row className="g-gs">
-            <Col md="12">
+            <Col md="6">
+              <FormGroup>
+                <Label className="form-label" htmlFor="namaEvent">
+                  Nama Event
+                </Label>
+                <div className="form-control-wrap">
+                  <div className="form-control-wrap">
+                    <Select
+                      ref={register({ required: true })}
+                      name="namaEvent"
+                      options={options}
+                      className="basic-select"
+                      classNamePrefix="select"
+                    />
+                  </div>
+                  {errors.namaEvent && <span className="invalid">This field is required</span>}
+                </div>
+              </FormGroup>
+            </Col>
+            <Col md="6">
               <FormGroup>
                 <Label className="form-label" htmlFor="namaKelompok">
                   Nama Kelompok
