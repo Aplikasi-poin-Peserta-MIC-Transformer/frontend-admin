@@ -1,10 +1,10 @@
 import axios from 'axios'
 
-const API_URL = "http://103.161.184.8/api/v1";
+const API_URL = "http://localhost:3000/api/v1";
 
 export const GET = (path, body) => {
   const promise = new Promise((resolve, reject) => {
-    axios.get(`${API_URL}/${path}`, body)
+    axios.get(`/${path}`, body)
       .then((result) => {
         resolve(result.data);
       }, (err) => {
@@ -16,7 +16,7 @@ export const GET = (path, body) => {
 
 export const POST = (path, body) => {
   const promise = new Promise((resolve, reject) => {
-    axios.post(`${API_URL}/${path}`, body)
+    axios.post(`/${path}`, body)
       .then((result) => {
         resolve(result.data);
       }, (err) => {
@@ -28,7 +28,7 @@ export const POST = (path, body) => {
 
 export const PUT = (path, body) => {
   const promise = new Promise((resolve, reject) => {
-    axios.put(`${API_URL}/${path}`, body)
+    axios.put(`/${path}`, body)
       .then((result) => {
         resolve(result.data);
       }, (err) => {
@@ -40,7 +40,7 @@ export const PUT = (path, body) => {
 
 export const DELETE = (path, body) => {
   const promise = new Promise((resolve, reject) => {
-    axios.delete(`${API_URL}/${path}`, body)
+    axios.delete(`/${path}`, body)
       .then((result) => {
         resolve(result.data);
       }, (err) => {
