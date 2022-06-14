@@ -1,13 +1,14 @@
 import React from 'react'
 import Admin from './admin'
 import Kelompok from './kelompok'
+import { useAuthContext } from "../../../context/authContext";
 
 const Dashboard = () => {
-  const role = localStorage.getItem('role')
+  const { user } = useAuthContext();
 
-  if (role === 'admin') {
+  if (user?.role === 'admin') {
     return <Admin />
-  } else if (role === 'user') {
+  } else if (user?.role === 'user') {
     return <Kelompok />
   }
 }

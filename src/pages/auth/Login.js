@@ -13,37 +13,34 @@ import PageContainer from "../../layout/page-container/PageContainer";
 import Head from "../../layout/head/Head";
 import AuthFooter from "./AuthFooter";
 import { useForm } from "react-hook-form";
+import API from "../../api";
+import { useAuthContext } from "../../context/authContext";
+import { useHistory } from "react-router";
+import jwt_decode from "jwt-decode";
 
 const Login = () => {
+  const history = useHistory();
+  const { login } = useAuthContext();
   const [loading, setLoading] = useState(false);
   const [passState, setPassState] = useState(false);
   const [errorVal, setError] = useState("");
 
   const onFormSubmit = (formData) => {
     setLoading(true);
-    // const loginName = "username";
-    const pass = "123456";
-    if (formData.passcode === pass) {
-      localStorage.setItem("accessToken", "token");
-      if (formData.name === "kelompok") {
-        localStorage.setItem("role", "user");
-      } else if (formData.name === "admin") {
-        localStorage.setItem("role", "admin");
+    API.login(formData).then((result) => {
+      const role = jwt_decode(result?.accessToken)?.role;
+      if (role === "admin") {
+        login(result);
+        history.push("/");
+      } else {
+        setError("Akun anda tidak terdaftar sebagai admin");
       }
-      setTimeout(() => {
-        window.history.pushState(
-          `${process.env.PUBLIC_URL ? process.env.PUBLIC_URL : "/"}`,
-          "auth-login",
-          `${process.env.PUBLIC_URL ? process.env.PUBLIC_URL : "/"}`
-        );
-        window.location.reload();
-      }, 2000);
-    } else {
-      setTimeout(() => {
-        setError("Cannot login with credentials");
-        setLoading(false);
-      }, 2000);
-    }
+    }).catch((err) => {
+      console.log(err);
+      setError("Cannot login with credentials");
+    }).finally(() => {
+      setLoading(false);
+    });
   };
 
   const { errors, register, handleSubmit } = useForm();
@@ -72,20 +69,20 @@ const Login = () => {
               <FormGroup>
                 <div className="form-label-group">
                   <label className="form-label" htmlFor="default-01">
-                    Username
+                    Nomor Whatsapp
                   </label>
                 </div>
                 <div className="form-control-wrap">
                   <input
                     type="text"
                     id="default-01"
-                    name="name"
+                    name="no_wa"
                     ref={register({ required: "This field is required" })}
-                    defaultValue="admin"
-                    placeholder="Enter your username"
+                    defaultValue="081234567890"
+                    placeholder="Enter your number"
                     className="form-control-lg form-control"
                   />
-                  {errors.name && <span className="invalid">{errors.name.message}</span>}
+                  {errors.no_wa && <span className="invalid">{errors.no_wa.message}</span>}
                 </div>
               </FormGroup>
               <FormGroup>
@@ -101,22 +98,22 @@ const Login = () => {
                       ev.preventDefault();
                       setPassState(!passState);
                     }}
-                    className={`form-icon lg form-icon-right passcode-switch ${passState ? "is-hidden" : "is-shown"}`}
+                    className={`form-icon lg form-icon-right password-switch ${passState ? "is-hidden" : "is-shown"}`}
                   >
-                    <Icon name="eye" className="passcode-icon icon-show"></Icon>
+                    <Icon name="eye" className="password-icon icon-show"></Icon>
 
-                    <Icon name="eye-off" className="passcode-icon icon-hide"></Icon>
+                    <Icon name="eye-off" className="password-icon icon-hide"></Icon>
                   </a>
                   <input
                     type={passState ? "text" : "password"}
                     id="password"
-                    name="passcode"
+                    name="password"
                     defaultValue="123456"
                     ref={register({ required: "This field is required" })}
-                    placeholder="Enter your passcode"
+                    placeholder="Enter your password"
                     className={`form-control-lg form-control ${passState ? "is-hidden" : "is-shown"}`}
                   />
-                  {errors.passcode && <span className="invalid">{errors.passcode.message}</span>}
+                  {errors.password && <span className="invalid">{errors.password.message}</span>}
                 </div>
               </FormGroup>
               <FormGroup>

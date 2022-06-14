@@ -2,6 +2,7 @@ import React from "react";
 import { Switch, Route, withRouter } from "react-router-dom";
 import { RedirectAs404 } from "./utils/Utils";
 import PrivateRoute from "./route/PrivateRoute";
+// import axios from "axios";
 
 import Layout from "./layout/Index";
 

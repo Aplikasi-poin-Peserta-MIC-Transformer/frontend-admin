@@ -3,6 +3,7 @@ import menu from "./MenuData";
 import { NavLink, Link } from "react-router-dom";
 import Icon from "../../components/icon/Icon";
 import classNames from "classnames";
+import { useAuthContext } from "../../context/authContext";
 
 const MenuHeading = ({ heading }) => {
   return (
@@ -259,12 +260,12 @@ const MenuSub = ({ icon, link, text, sub, sidebarToggle, mobileView, ...props })
 };
 
 const Menu = ({ sidebarToggle, mobileView }) => {
-  const role = localStorage.getItem("role");
+  const { user } = useAuthContext();
   const navigation = menu.filter(item => {
     const res = item.role
     if (res) {
       for (let i = 0; i < res.length; i++) {
-        if (role.includes(res[i])) {
+        if (user?.role.includes(res[i])) {
           return true
         }
       }
