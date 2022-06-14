@@ -12,11 +12,13 @@ const API = {
   loginTeams: (body) => POST("teams/login", body),
   registerTeams: (body) => POST("teams/register", body),
   getTeams: () => GET("teams/team"),
+  getAllTeams: () => GET("teams"),
   getTeamsId: (id) => GET(`teams/${id}`),
   getKlasemen: (eventId, status) => GET(`teams/klasemen?EventId=${eventId}&status=${status}`),
   // events
   addEvent: (body) => POST("events/add", body),
   getEvents: () => GET("events"),
+  getEventId: (id) => GET(`events/${id}`),
   updateEventId: (id, body) => PUT(`events/${id}`, body),
   deleteEventId: (id) => DELETE(`events/${id}`),
   // gift

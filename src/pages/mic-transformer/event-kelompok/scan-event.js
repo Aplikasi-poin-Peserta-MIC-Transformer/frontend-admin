@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from 'react'
 import Content from "../../../layout/content/Content";
 import QrReader from "react-qr-reader";
@@ -17,8 +18,11 @@ import Icon from "../../../components/icon/Icon";
 import barcodeSound from './barcode-sound.mp3';
 import scanAnimated from './scan-animated.gif';
 import useSound from 'use-sound'
+import { useParams } from 'react-router';
+import API from '../../../api';
 
 const ScanEvent = () => {
+  const { id } = useParams();
   const [playSound] = useSound(barcodeSound, { volume: 2 });
   const [dataModal, setDataModal] = useState({});
   const [modal, setModal] = useState(false);
@@ -31,6 +35,41 @@ const ScanEvent = () => {
   const [value, setValue] = useState('');
   const [selected, setSelected] = useState("environment");
   const [processing, setProcessing] = useState(false);
+
+  const [scanItem, setScanItem] = useState(null);
+  const [namaEvent, setNamaEvent] = useState('');
+
+  React.useEffect(() => {
+    API.getEventId(id).then(res => {
+      setNamaEvent(res.nama_event);
+      setScanItem(
+        Array.from(Array(res?.jml_pos).keys()).map((idx) => {
+          return (
+            <React.Fragment key={idx}>
+              <li
+                className="list-group-item text-center"
+                style={{ cursor: "pointer", marginBottom: "10px" }}
+                onClick={() => {
+                  toggle();
+                  setValue('');
+                  setDataModal({
+                    id: idx,
+                    event: `Event ${idx}`,
+                    perusahaan: `Perusahaan ${idx}`,
+                    tanggal: `Tanggal ${idx}`,
+                    bobot_point: idx + 10,
+                  });
+                }}>
+                <BlockTitle tag="h5" key={idx}>Pos ke {idx + 1}</BlockTitle>
+              </li>
+            </React.Fragment>
+          )
+        })
+      )
+    }).catch(err => {
+      console.log(err);
+    })
+  }, [id, toggle]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -64,37 +103,11 @@ const ScanEvent = () => {
       <Block size="lg">
         <BlockHead>
           <BlockHeadContent>
-            <BlockTitle tag="h1">Nama Event camera v2</BlockTitle>
-            <p>
-              Cards are built with as little markup and styles as possible, but still manage to deliver a ton of
-              control and customization.
-            </p>
+            <BlockTitle tag="h1">{namaEvent}</BlockTitle>
           </BlockHeadContent>
         </BlockHead>
         <ul className="list-group">
-          {Array.from(Array(15).keys()).map((idx) => {
-            return (
-              <>
-                <li
-                  className="list-group-item text-center"
-                  key={idx + 1}
-                  style={{ cursor: "pointer", marginBottom: "10px" }}
-                  onClick={() => {
-                    toggle();
-                    setValue('');
-                    setDataModal({
-                      id: idx,
-                      event: `Event ${idx}`,
-                      perusahaan: `Perusahaan ${idx}`,
-                      tanggal: `Tanggal ${idx}`,
-                      bobot_point: idx + 10,
-                    });
-                  }}>
-                  <BlockTitle tag="h5" key={idx}>Pos ke {idx + 1}</BlockTitle>
-                </li>
-              </>
-            )
-          })}
+          {scanItem}
         </ul>
       </Block>
 
@@ -110,7 +123,6 @@ const ScanEvent = () => {
           Pos ke {dataModal?.id + 1}
         </ModalHeader>
         <ModalBody>
-          <h3 className='text-center'>Bobot Poin {dataModal.bobot_point}</h3>
 
           <div className="form-inline d-flex justify-content-center mt-3">
             {processing && (

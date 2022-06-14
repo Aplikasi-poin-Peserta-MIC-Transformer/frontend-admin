@@ -48,6 +48,21 @@ const Event = () => {
       maxWidth: "100px",
     },
     {
+      name: "Scan QR",
+      cell: (row) => {
+        return (
+          <>
+            <button type='button' className='btn btn-primary p-1 mr-1' onClick={() => history.push(`/event-kelompok/scan/${row.id}`)}><Icon name="scan" /></button>
+          </>
+        )
+      },
+      maxWidth: "100px",
+      sortable: false,
+      style: {
+        justifyContent: "center",
+      }
+    },
+    {
       name: "Nama Event",
       selector: (row) => row.nama_event,
       sortable: true,
@@ -81,11 +96,18 @@ const Event = () => {
       }
     },
     {
+      name: "Kelompok",
+      cell: (row) => <button type='button' className='btn btn-primary' onClick={() => {
+        history.push(`/event-kelompok/tambah-kelompok/${row.id}`)
+      }}>Tambah Tim</button>,
+      sortable: false,
+      maxWidth: "150px",
+    },
+    {
       name: "Actions",
       cell: (row) => {
         return (
           <>
-            <button type='button' className='btn btn-primary p-1 mr-1' onClick={() => history.push(`/event-kelompok/scan/${row.id}`)}><Icon name="eye-fill" /></button>
             <button type='button' className='btn btn-primary p-1 mr-1' onClick={() => history.push(`/event-kelompok/edit/${row.id}`)}><Icon name="pen-alt-fill"/></button>
             <button type='button' className='btn btn-danger p-1'><Icon name="trash-fill"/></button>
           </>

@@ -26,7 +26,7 @@ const create = () => {
     <Content>
       <Form className={formClass} onSubmit={handleSubmit(onFormSubmit)}>
         <Row className="g-gs">
-          <Col md="6">
+          <Col md="12">
             <FormGroup>
               <Label className="form-label" htmlFor="namaEvent">
                 Nama Event
@@ -40,6 +40,21 @@ const create = () => {
                   className="form-control"
                 />
                 {errors.namaEvent && <span className="invalid">This field is required</span>}
+              </div>
+            </FormGroup>
+            <FormGroup>
+              <Label className="form-label" htmlFor="jml_pos">
+                Jumlah Pos
+              </Label>
+              <div className="form-control-wrap">
+                <input
+                  ref={register({ required: true })}
+                  type="number"
+                  id="jml_pos"
+                  name="jml_pos"
+                  className="form-control"
+                />
+                {errors.jml_pos && <span className="invalid">This field is required</span>}
               </div>
             </FormGroup>
             <FormGroup>
@@ -60,7 +75,7 @@ const create = () => {
               </div>
             </FormGroup>
           </Col>
-          <Col md="6">
+          {/* <Col md="6">
             <FormGroup>
               <Label className="form-label" htmlFor="pilihEvent">
                 Tambah Pos
@@ -71,11 +86,11 @@ const create = () => {
                     <div className="input-group">
                       <div className="input-group-prepend">
                         <span className="input-group-text" id="inputGroup-sizing-sm">
-                          Pos {idx + 1}
+                          Poin Pos {idx + 1}
                         </span>
                       </div>
                       <input
-                        ref={register({ required: true })}
+                        ref={register({ required: false })}
                         type="number" 
                         className="form-control" 
                         name={`pos_${idx + 1}`}
@@ -86,7 +101,7 @@ const create = () => {
                 </React.Fragment>
               ))}
             </FormGroup>
-          </Col>
+          </Col> */}
           <Col md="12">
             <FormGroup className='d-flex justify-content-end'>
               <Button color="primary" size="lg">

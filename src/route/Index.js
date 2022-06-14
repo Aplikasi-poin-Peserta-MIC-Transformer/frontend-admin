@@ -118,6 +118,7 @@ import EventKelompokScan from "../pages/mic-transformer/event-kelompok/scan-even
 import EventKelompokEdit from "../pages/mic-transformer/event-kelompok/edit";
 import EventKelompokCreate from "../pages/mic-transformer/event-kelompok/create";
 import KelasemenKelompok from "../pages/mic-transformer/event-kelompok/kelompok-kelasemen";
+import TambahKelompok from "../pages/mic-transformer/event-kelompok/tambah-kelompok";
 
 import EventUser from "../pages/mic-transformer/event-user";
 import EventUserEdit from "../pages/mic-transformer/event-user/edit";
@@ -156,6 +157,7 @@ const Pages = () => {
         <Route exact path={`${process.env.PUBLIC_URL}/event-kelompok/edit/:id`} component={EventKelompokEdit} />
         <Route exact path={`${process.env.PUBLIC_URL}/event-kelompok/create`} component={EventKelompokCreate} />
         <Route exact path={`${process.env.PUBLIC_URL}/event-kelompok/kelasemen/:id`} component={KelasemenKelompok} />
+        <Route exact path={`${process.env.PUBLIC_URL}/event-kelompok/tambah-kelompok/:id`} component={TambahKelompok} />
 
         <Route exact path={`${process.env.PUBLIC_URL}/kelompok`} component={Kelompok} />
         <Route exact path={`${process.env.PUBLIC_URL}/kelompok/user/:id`} component={KelompokUser} />

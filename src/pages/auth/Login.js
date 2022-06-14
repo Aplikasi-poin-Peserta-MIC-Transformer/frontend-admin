@@ -100,9 +100,9 @@ const Login = () => {
                     }}
                     className={`form-icon lg form-icon-right password-switch ${passState ? "is-hidden" : "is-shown"}`}
                   >
-                    <Icon name="eye" className="password-icon icon-show"></Icon>
+                    <Icon name="eye" className="passcode-icon icon-show"></Icon>
 
-                    <Icon name="eye-off" className="password-icon icon-hide"></Icon>
+                    <Icon name="eye-off" className="passcode-icon icon-hide"></Icon>
                   </a>
                   <input
                     type={passState ? "text" : "password"}
