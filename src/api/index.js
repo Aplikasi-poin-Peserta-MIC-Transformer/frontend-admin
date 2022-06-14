@@ -13,7 +13,8 @@ const API = {
   registerTeams: (body) => POST("teams/register", body),
   getTeams: () => GET("teams/team"),
   getAllTeams: () => GET("teams"),
-  getTeamsId: (id) => GET(`teams/${id}`),
+  getTeamId: (id) => GET(`teams/team/${id}`),
+  getTeamsIdEvent: (id) => GET(`teams/${id}`),
   getKlasemen: (eventId, status) => GET(`teams/klasemen?EventId=${eventId}&status=${status}`),
   // events
   addEvent: (body) => POST("events/add", body),
@@ -26,6 +27,8 @@ const API = {
   getGifts: () => GET("gifts"),
   getGiftId: (id) => GET(`gifts/${id}`),
   updateGiftId: (id, body) => PUT(`gifts/${id}`, body),
+  // poin
+  addPoints: (body) => POST("points", body),
 }
 
 export default API;

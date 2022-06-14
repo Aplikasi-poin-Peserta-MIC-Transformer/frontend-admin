@@ -17,7 +17,7 @@ const Kelompok = () => {
   const [loadingData, setLoadingData] = useState(true);
 
   useEffect(() => {
-    API.getTeamsId(id)
+    API.getTeamsIdEvent(id)
       .then(res => {
         setData(res);
         setLoadingData(false);
@@ -87,7 +87,7 @@ const Kelompok = () => {
     API.registerTeams(value)
       .then(res => {
         setErrorRegister(false);
-        API.getTeamsId(id).then(res => {
+        API.getTeamsIdEvent(id).then(res => {
             setData(res);
             setLoadingData(false);
           }).catch(err => {
