@@ -1,15 +1,23 @@
 import React, { useState } from "react";
 import { DropdownToggle, DropdownMenu, Dropdown } from "reactstrap";
 import { Icon } from "../../../../components/Component";
-import { LinkList, LinkItem } from "../../../../components/links/Links";
+import {
+  LinkList,
+  // LinkItem
+} from "../../../../components/links/Links";
 import UserAvatar from "../../../../components/user/UserAvatar";
+import { useAuthContext } from "../../../../context/authContext";
+import { useHistory } from "react-router";
 
 const User = () => {
+  const history = useHistory();
+  const { logout } = useAuthContext();
   const [open, setOpen] = useState(false);
   const toggle = () => setOpen((prevState) => !prevState);
 
   const handleSignout = () => {
-    localStorage.removeItem("accessToken");
+    logout();
+    history.push("/auth-login");
   };
 
   return (
@@ -45,10 +53,10 @@ const User = () => {
         </div> */}
         <div className="dropdown-inner">
           <LinkList>
-            <a href={`${process.env.PUBLIC_URL}/auth-login`} onClick={handleSignout}>
+            <div role="button" onClick={handleSignout}>
               <Icon name="signout"></Icon>
               <span>Sign Out</span>
-            </a>
+            </div>
           </LinkList>
         </div>
       </DropdownMenu>
