@@ -1,7 +1,5 @@
 import axios from 'axios'
 
-const API_URL = "http://localhost:3000/api/v1";
-
 export const GET = (path, body) => {
   const promise = new Promise((resolve, reject) => {
     axios.get(`/${path}`, body)
