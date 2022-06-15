@@ -66,6 +66,7 @@ const Event = () => {
       name: "Nama Event",
       selector: (row) => row.nama_event,
       sortable: true,
+      minWidth: "200px"
     },
     {
       name: "Jumlah Pos",
@@ -90,7 +91,7 @@ const Event = () => {
         history.push(`/event-kelompok/kelasemen/${row.id}`)
       }}><Icon name="growth-fill" className="mr-1" />Kelasemen</button>,
       sortable: false,
-      maxWidth: "200px",
+      width: "200px",
       style: {
         justifyContent: "center",
       }
@@ -101,7 +102,7 @@ const Event = () => {
         history.push(`/event-kelompok/tambah-kelompok/${row.id}`)
       }}>Tambah Tim</button>,
       sortable: false,
-      maxWidth: "150px",
+      width: "150px",
     },
     {
       name: "Actions",

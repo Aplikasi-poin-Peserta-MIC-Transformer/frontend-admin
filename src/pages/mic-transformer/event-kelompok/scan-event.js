@@ -56,6 +56,7 @@ const ScanEvent = () => {
   const [warning, setWarning] = React.useState(false);
   const [isNotTeam, setIsNotTeam] = React.useState(false);
   const [isPoinAdded, setIsPoinAdded] = React.useState(false);
+  const [isHasPos, setIsHasPos] = React.useState(false);
 
   const { errors, register, handleSubmit } = useForm();
   const onFormSubmit = (data, e) => {
@@ -64,7 +65,7 @@ const ScanEvent = () => {
       status: 'team',
       TeamId_or_UserId: timId,
       eventId: id,
-      pos: `${dataModal?.id + 1}`
+      pos: (dataModal?.id + 1)
     }
     API.addPoints(result).then(res => {
       console.log(res);
@@ -88,15 +89,21 @@ const ScanEvent = () => {
           if (status === 'team') {
             setTimId(TeamId_or_UserId);
             API.getTeamId(TeamId_or_UserId).then(res => {
-              setError(false);
-              setPos(res.pos);
-              setPoin(res.total_poin);
-              setNamaTeam(res.nama_tim);
-              setProcessing(false);
-              playSound();
+              if (res.pos <= (dataModal?.id + 1) && res.pos !== (dataModal?.id + 1)) {
+                setPos(res.pos);
+                setPoin(res.total_poin);
+                setNamaTeam(res.nama_tim);
+                setError(false);
+                setIsHasPos(false);
+                setProcessing(false);
+              } else {
+                setIsHasPos(true);
+              }
             }).catch(err => {
               console.log(err);
               setError(true);
+            }).finally(() => {
+              playSound();
             })
           } else {
             setIsNotTeam(true);
@@ -207,6 +214,15 @@ const ScanEvent = () => {
               <Alert color="warning" className="alert-icon">
                 {" "}
                 <Icon name="alert-circle" /> Barcode hanya untuk team{" "}
+              </Alert>
+            </div>
+          )}
+
+          {isHasPos && (
+            <div className="mb-3">
+              <Alert color="danger" className="alert-icon">
+                {" "}
+                <Icon name="alert-circle" /> Barcode sudah melewati pos ini!{" "}
               </Alert>
             </div>
           )}
