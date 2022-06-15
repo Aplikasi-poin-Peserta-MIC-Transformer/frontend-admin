@@ -68,7 +68,6 @@ const ScanEvent = () => {
       pos: (dataModal?.id + 1)
     }
     API.addPoints(result).then(res => {
-      console.log(res);
       setIsPoinAdded(true);
     }).catch(err => {
       console.log(err);
