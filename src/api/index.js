@@ -7,6 +7,7 @@ const API = {
   register: (body) => POST("users/register", body),
   registerAdmin: (body) => POST("users/registerAdmin", body),
   getUser: () => GET("users/user"),
+  getUserInfo: (id) => GET(`users/user/${id}`),
   getUserId: (id) => GET(`users/${id}`),
   // teams
   loginTeams: (body) => POST("teams/login", body),
@@ -29,6 +30,7 @@ const API = {
   updateGiftId: (id, body) => PUT(`gifts/${id}`, body),
   // poin
   addPoints: (body) => POST("points", body),
+  addUserPoints: (body) => POST("points/user", body),
 }
 
 export default API;

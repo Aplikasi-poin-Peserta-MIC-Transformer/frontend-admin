@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const URL = "https://api-poin-peserta.herokuapp.com/api/v1";
+const URL = "https://be-poin-peserta.herokuapp.com/api/v1";
 // const URL = "http://localhost:3000/api/v1";
 
 export const GET = (path, body) => {
